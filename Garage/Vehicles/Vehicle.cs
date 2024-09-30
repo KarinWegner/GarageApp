@@ -18,6 +18,13 @@
             Color = color;
         }
 
-        
+        public virtual string ReturnParametres()
+        {
+            string parameterString = String.Concat("RegistrationNumber,", "Color,", "Number of Wheels,");
+
+            
+
+            return parameterString;
+        }
     }
 }

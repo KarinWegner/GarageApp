@@ -10,8 +10,16 @@ namespace GarageApp.Vehicles
     {
         private int numberOfSeats;
         public int NumberOfSeats { get; set; }
-        public Bus(string regNumber, string color, int wheelCount) : base(regNumber, color, wheelCount)
+        public Bus(string regNumber, string color, int wheelCount, int numberOfSeats) : base(regNumber, color, wheelCount)
         {
+            NumberOfSeats = numberOfSeats;
+        }
+
+        public override string ReturnParametres()
+        {
+            string parametreString = base.ReturnParametres();
+            parametreString += ",Number of seats";
+            return parametreString;
         }
     }
 }

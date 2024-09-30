@@ -14,5 +14,12 @@ namespace GarageApp.Vehicles
         {
            FuelType = fuelType;
         }
+
+        public override string ReturnParametres()
+        {
+            string parametreString = base.ReturnParametres();
+            parametreString += ",Fuel Type";
+            return parametreString;
+        }
     }
 }
