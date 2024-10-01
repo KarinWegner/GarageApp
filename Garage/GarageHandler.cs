@@ -64,11 +64,11 @@ namespace GarageApp {
                 {
                     Console.WriteLine($"- {item}");
                 }
-                Console.ReadLine();
-
-                string input = UI.CleanInput(Console.ReadLine());
+                string dirtyInput = Console.ReadLine();
+                string input = UI.CleanInput(dirtyInput);
                 Console.WriteLine($"Input: {input}");
                 Console.ReadLine();
+                
 
             }
         }

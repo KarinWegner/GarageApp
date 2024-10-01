@@ -123,29 +123,41 @@ namespace GarageApp
         public static string CleanInput(string input)
         {
 
+                input.ToLower();
             string cleanedInput = "";
 
             string[] inputCleanup = input.Split(',');
+            Console.WriteLine($"InputCleanup: {inputCleanup}");
 
-            foreach (string item in inputCleanup)
+            for (int i = 0; i < inputCleanup.Length; i++)
+            
             {
-                item.Trim();
+                inputCleanup[i].Trim();
 
-                item.ToLower();
-                if (!item.All(Char.IsLetterOrDigit))
+                if (!inputCleanup[i].All(Char.IsLetterOrDigit))
                 {
-                    Console.WriteLine("An input you entered contained invalid characters. Input was cleaned. To ensure proper naming, please only use Letters and Digits.");
+                    Console.WriteLine("An input you entered contained invalid characters. Input was cleaned. To ensure proper naming, please only use Letters, Periods and Digits.");
+                    string newString = inputCleanup[i];
+                    inputCleanup[i] = "";
+                    foreach (char c in newString)       //Rewrites string without invalid characters
+                    {
+                        if (char.IsLetterOrDigit(c) || c == '.')
+                        {
+                            inputCleanup[i] += c;
+                        }
+                    }
 
                 }
 
-                if (String.IsNullOrEmpty(item))             //separate if in case previous cleanup left string empty
+                if (String.IsNullOrEmpty(inputCleanup[i]))             //separate if in case previous cleanup left string empty
                 {
                     Console.WriteLine("An input you entered was empty. If you wish to change this, please ensure all inputs contain only Letters and Digits");
-                    item.Insert(0, "empty");
+                    inputCleanup[i] = "empty";
                 }
 
             }
             cleanedInput = string.Join(',', inputCleanup);
+            Console.WriteLine($"Cleaned input: {cleanedInput}");
             return cleanedInput;
         }
         private void Instantiate()
