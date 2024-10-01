@@ -48,6 +48,30 @@ namespace GarageApp
             }
 
         }
+        public char EnterVehicle()
+        {
+            Console.Clear();
+            Console.WriteLine("What kind of vehicle is entering the garage?"
+                               +"\n1. Motorcycle"
+                               +"\n2. Car"
+                               +"\n3. Bus"
+                               +"\n0. Return to menu");
+            
+            char input = RecieveInput(3);
+            switch (input)
+            {
+                case'1':
+                    return (char)VehicleID.Motorcycle;
+                case '2':
+                    return (char)VehicleID.Car;
+                case '3':
+                    return (char)VehicleID.Bus;
+                case '0': return (char)VehicleID.Unknown;
+                default: Console.WriteLine("An error occured while recieving input. Returning to previous menu.");
+                    return (char)VehicleID.Unknown;
+                    
+            }
+        }
         void RecieveInput(string input) { }
         static char RecieveInput(int maxOptionNumber)
         {
