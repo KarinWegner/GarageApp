@@ -4,11 +4,19 @@ namespace GarageApp {
     {
         List<Garage> garageList;
         Garage activeGarage;
+        Garage sampleGarage;
 
 
         public GarageHandler()
         {
             garageList = new List<Garage>();
+
+            sampleGarage = new Garage("sampleGarage", 4);
+            sampleGarage.CreateVehicle(0,"abc123", "white", 4);
+            sampleGarage.CreateMC(1, "abc123", "white", 2, 4.5);
+            sampleGarage.CreateCar(2, "abc123", "white", 4, "diesel");
+            sampleGarage.CreateBus(3, "abc123", "white", 4, 34);
+
         }
         public void AddGarage(string name, int capacity)
         {
@@ -39,15 +47,19 @@ namespace GarageApp {
                 {
                     return;
                 }
-
+                //string vehicleTypeString = vehicleType.ToString();
+                //Console.WriteLine(vehicleTypeString);
+                //Console.ReadLine();
+                int sampleVehicle = (int)vehicleType - 1;
+                //Console.WriteLine(sampleVehicle);
                 Console.WriteLine("Enter vehicle information."
                                     + "\nSeparate fields using a comma"
                                     + "\n"
                                     + "\nRequired information:");
 
                 //ToDo: make generic so any base class can be used. 
-
-               // string[] requiredInformation = Vehicle.Parametres.Split(",");
+                
+               string[] requiredInformation = sampleGarage.GetVehicle(sampleVehicle).Parametres.Split(",");
                 foreach (string item in requiredInformation)
                 {
                     Console.WriteLine($"- {item}");

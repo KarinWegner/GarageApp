@@ -20,18 +20,41 @@ namespace GarageApp
 
         }
 
-        public void CreateVehicle(string regNumber, string color, int wheelCount)
+        #region CreateVehicle            
+        public void CreateVehicle(int parkingSpot, string regNumber, string color, int wheelCount)//ToDo: make generic
         {
-            Vehicle vehicle = new Vehicle(regNumber, color, wheelCount);                //ToDo: Update to create subtypes
-            vehicleArray[vehicleArray.Count()] = vehicle;
+            Vehicle vehicle = new Vehicle(regNumber, color, wheelCount);
+            vehicleArray[parkingSpot] = vehicle;                                //ToDo, automate finding a free spot
         }
+        public void CreateCar(int parkingsSpot, string regNumber, string color, int wheelCount, string fuelType)
+        {
+            Car car = new Car(regNumber, color, wheelCount, fuelType);
+            vehicleArray[parkingsSpot] = car;
+        }
+        public void CreateMC(int parkingsSpot, string regNumber, string color, int wheelCount, double cylinderVolume)
+        {
+            Motorcycle mc = new Motorcycle(regNumber, color, wheelCount, cylinderVolume);
+            vehicleArray[parkingsSpot] = mc;
+        }
+        public void CreateBus(int parkingsSpot, string regNumber, string color, int wheelCount, int numberOfSeats)
+        {
+            Bus bus = new Bus(regNumber, color, wheelCount, numberOfSeats);
+            vehicleArray[parkingsSpot] = bus;
+        }
+        #endregion CreateVehicle
 
+        public Vehicle GetVehicle(int parkingSpot)
+        {
+            Vehicle vehicle = vehicleArray[parkingSpot];
+            
+            return vehicle;
+        }
         public bool IsFull()
         {
             bool isFull;
             foreach (var item in vehicleArray)
             {
-                if (item== null)
+                if (item == null)
                 {
                     return false;
                 }
@@ -42,8 +65,8 @@ namespace GarageApp
             //                    +$"\nSpots filled: {spotsFilled}"
             //                    +$"\nSpots available: {Capacity - spotsFilled}");
 
-            
-                isFull = true;
+
+            isFull = true;
 
             return isFull;
         }

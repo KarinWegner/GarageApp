@@ -8,7 +8,6 @@ namespace GarageApp
 
                       
                         
-            Console.ReadLine();
 
             UI ui = new UI();
 

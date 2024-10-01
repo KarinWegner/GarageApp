@@ -26,7 +26,7 @@ namespace GarageApp.Vehicles
 
         internal virtual string SetParametres()
         {
-            string parameterString = String.Concat("RegistrationNumber,", "Color,", "Number of Wheels,");
+            string parameterString = String.Concat("RegistrationNumber,", "Color,", "Number of Wheels");
 
             Console.WriteLine($"SetParametres: Parametres set to {parameterString}");
 
