@@ -29,17 +29,21 @@ namespace GarageApp
         public bool IsFull()
         {
             bool isFull;
-            int spotsFilled = vehicleArray.Count();
+            foreach (var item in vehicleArray)
+            {
+                if (item== null)
+                {
+                    return false;
+                }
+            }
 
-            Console.WriteLine($"Garage capacity: {Capacity}"
-                                +$"\nSpots filled: {spotsFilled}"
-                                +$"\nSpots available: {Capacity - spotsFilled}");
+            //ToDo: Add check to find how many slots in vehicleArray are free to list number of available spots
+            //Console.WriteLine($"Garage capacity: {Capacity}"
+            //                    +$"\nSpots filled: {spotsFilled}"
+            //                    +$"\nSpots available: {Capacity - spotsFilled}");
 
-            Console.WriteLine();
-            if (spotsFilled == Capacity) 
+            
                 isFull = true;
-            else
-                isFull = false;
 
             return isFull;
         }

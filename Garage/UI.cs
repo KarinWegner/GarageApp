@@ -1,6 +1,7 @@
 ﻿
 using System.ComponentModel.Design;
 using System.IO.Pipes;
+using System.Security.Cryptography;
 
 namespace GarageApp
 {
@@ -36,7 +37,8 @@ namespace GarageApp
                 switch (input)
                 {
                     case '1':
-
+                        Console.WriteLine("case 1:");
+                        garageHandler.AddVehicle();
                         break;
                     case '0':
                         isActive = false;
@@ -48,28 +50,33 @@ namespace GarageApp
             }
 
         }
-        public char EnterVehicle()
+        public static char EnterVehicle()
         {
             Console.Clear();
             Console.WriteLine("What kind of vehicle is entering the garage?"
-                               +"\n1. Motorcycle"
-                               +"\n2. Car"
-                               +"\n3. Bus"
-                               +"\n0. Return to menu");
-            
-            char input = RecieveInput(3);
+                               + "\n1. Motorcycle"
+                               + "\n2. Car"
+                               + "\n3. Bus"
+                               + "\n4. Unspecified Vehicle"
+                               + "\n0. Return to menu");
+
+            char input = RecieveInput(4);
             switch (input)
             {
-                case'1':
+                case '1':
                     return (char)VehicleID.Motorcycle;
                 case '2':
                     return (char)VehicleID.Car;
                 case '3':
                     return (char)VehicleID.Bus;
-                case '0': return (char)VehicleID.Unknown;
-                default: Console.WriteLine("An error occured while recieving input. Returning to previous menu.");
+                case '4':
+                    return (char)(VehicleID.Vehicle);
+                case '0':
                     return (char)VehicleID.Unknown;
-                    
+                default:
+                    Console.WriteLine("An error occured while recieving input. Returning to previous menu.");
+                    return (char)VehicleID.Vehicle;
+
             }
         }
         void RecieveInput(string input) { }
@@ -98,7 +105,7 @@ namespace GarageApp
                 }
                 if (isNumber)
                 {
-                    if (maxOptionNumber > numberInput)
+                    if (maxOptionNumber < numberInput)
                     {
                         Console.WriteLine("Option not available. Please enter the number of the menu choice you want to choose:"); Console.WriteLine();
                     }
@@ -113,10 +120,40 @@ namespace GarageApp
             } while (!correctInput);
             return returnChar;
         }
+        public static string CleanInput(string input)
+        {
+
+            string cleanedInput = "";
+
+            string[] inputCleanup = input.Split(',');
+
+            foreach (string item in inputCleanup)
+            {
+                item.Trim();
+
+                item.ToLower();
+                if (!item.All(Char.IsLetterOrDigit))
+                {
+                    Console.WriteLine("An input you entered contained invalid characters. Input was cleaned. To ensure proper naming, please only use Letters and Digits.");
+
+                }
+
+                if (String.IsNullOrEmpty(item))             //separate if in case previous cleanup left string empty
+                {
+                    Console.WriteLine("An input you entered was empty. If you wish to change this, please ensure all inputs contain only Letters and Digits");
+                    item.Insert(0, "empty");
+                }
+
+            }
+            cleanedInput = string.Join(',', inputCleanup);
+            return cleanedInput;
+        }
         private void Instantiate()
         {
             garageHandler = new GarageHandler();
             garageHandler.AddGarage("Main Garage", 50);
+
+
         }
     }
 }

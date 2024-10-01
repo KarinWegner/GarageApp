@@ -15,9 +15,9 @@ namespace GarageApp.Vehicles
             NumberOfSeats = numberOfSeats;
         }
 
-        public override string ReturnParametres()
+        internal override string SetParametres()
         {
-            string parametreString = base.ReturnParametres();
+            string parametreString = base.SetParametres();
             parametreString += ",Number of seats";
             return parametreString;
         }

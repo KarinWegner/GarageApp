@@ -8,7 +8,7 @@ namespace GarageApp
 {
     internal enum VehicleID
     {
-        Unknown,
+        Unknown,        //For returning or cancelling operations
         Vehicle,
         Motorcycle,
         Car,

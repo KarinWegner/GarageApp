@@ -14,9 +14,9 @@ namespace GarageApp.Vehicles
         {
             CylinderVolume = cylinderVolume;
         }
-        public override string ReturnParametres()
+        internal override string SetParametres()
         {
-            string parametreString = base.ReturnParametres();
+            string parametreString = base.SetParametres();
             parametreString += ",Cylinder Volume";
             return parametreString;
         }
