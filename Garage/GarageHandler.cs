@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.VisualBasic.FileIO;
 using System.Drawing;
 using System.IO.Pipes;
 using System.Security.Cryptography;
@@ -32,6 +33,26 @@ namespace GarageApp
                              + $"\nCapacity:\t{garage.Capacity}");
 
             activeGarage = garage;                                  //Currently chosen garage
+        }
+
+        public void Seeder()
+        {
+
+            activeGarage.AddVehicle(new Motorcycle("JTS647", "blue", 2, 10), 0);
+            activeGarage.AddVehicle(new Bus("XUG175", "red", 6, 30), 1);
+            activeGarage.AddVehicle(new Motorcycle("MQP032", "purple", 2, 5), 2);
+            activeGarage.AddVehicle(new Car("HLV759", "green", 4, "diesel"), 3);
+            activeGarage.AddVehicle(new Car("PTF070", "blue", 4, "petrol"), 4);
+            activeGarage.AddVehicle(new Bus("RVM104", "blue", 4, 18), 5);
+            activeGarage.AddVehicle(new Bus("MSB786", "black", 6, 28), 6);
+            activeGarage.AddVehicle(new Motorcycle("XDB238", "red", 2, 1), 7);
+            activeGarage.AddVehicle(new Motorcycle("TQY456", "red", 3, 5), 8);
+            activeGarage.AddVehicle(new Car("JFN060", "blue", 4, "petrol"), 9);
+            activeGarage.AddVehicle(new Motorcycle("YIJ473", "purple", 2, 5), 10);
+            activeGarage.AddVehicle(new Bus("LFT899", "black", 8, 42), 11);
+            activeGarage.AddVehicle(new Motorcycle("ZPF596", "gray", 2, 2), 12);
+            return;
+
         }
 
         public void AddVehicle()
@@ -71,7 +92,7 @@ namespace GarageApp
                 }
                 string dirtyInput = Console.ReadLine();
                 string input = UI.CleanInput(dirtyInput);
-                
+
                 Console.WriteLine($"Input: {input}");
 
                 string[] recievedInformation = input.Split(",");
@@ -100,7 +121,7 @@ namespace GarageApp
                             Console.ReadLine();
                             break;
                         case 2:
-                            double cylinderCount = float.Parse(recievedInformation[3]);
+                            int cylinderCount = int.Parse(recievedInformation[3]);
                             activeGarage.AddVehicle(new Motorcycle(regNumber, color, wheelCount, cylinderCount), parkingSpot);
                             Console.WriteLine("ADDED MC");
                             Console.ReadLine();
@@ -122,7 +143,7 @@ namespace GarageApp
                             Console.ReadLine();
                             break;
                     }
-                    
+
                 }
                 catch (System.FormatException)
                 {
@@ -130,7 +151,7 @@ namespace GarageApp
                     Console.ReadLine();
                     continue;
                 }
-            Console.WriteLine($"Vehicle was entered into the garage at parking spot {parkingSpot}");
+                Console.WriteLine($"Vehicle was entered into the garage at parking spot {parkingSpot}");
 
                 Console.ReadLine();
                 isActive = false;
@@ -148,7 +169,7 @@ namespace GarageApp
                 return;
             }
             Console.WriteLine("Vehicles currently in garage: ");
-           activeGarage.GenerateVehicleList();
+            activeGarage.GenerateVehicleList();
             Console.ReadLine();
         }
     }

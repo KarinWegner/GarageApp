@@ -174,6 +174,7 @@ namespace GarageApp
         {
             garageHandler = new GarageHandler();
             garageHandler.AddGarage("Main Garage", 50);
+            garageHandler.Seeder();
 
 
         }

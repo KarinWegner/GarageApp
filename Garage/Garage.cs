@@ -82,12 +82,17 @@ namespace GarageApp
 
         internal void GenerateVehicleList()
         {
-            var c = from T in vehicleArray
-                    where T is not null
-                    select T.RegNumber;
+            var c = vehicleArray.Where(T => T != null)
+                .OrderBy(T => T.RegNumber)
+                .Select(T => T.RegNumber);
+            //var c = from T in vehicleArray
+            //        where T is not null
+            //        select T.RegNumber;
+            int i = 0;
             foreach (var item in c) 
             {
-                Console.WriteLine(item);
+                i++;
+                Console.WriteLine($"{i}: {item}");
             }
             return;
         }

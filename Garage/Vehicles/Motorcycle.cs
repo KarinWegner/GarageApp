@@ -8,9 +8,9 @@ namespace GarageApp.Vehicles
 {
     internal class Motorcycle : Vehicle
     {
-        private double cylinderVolume;
-        public double CylinderVolume { get; set; }  
-        public Motorcycle(string regNumber, string color, int wheelCount, double cylinderVolume) : base(regNumber, color, wheelCount)
+        private int cylinderVolume;
+        public int CylinderVolume { get; set; }  
+        public Motorcycle(string regNumber, string color, int wheelCount, int cylinderVolume) : base(regNumber, color, wheelCount)
         {
             CylinderVolume = cylinderVolume;
         }
