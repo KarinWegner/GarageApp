@@ -71,6 +71,7 @@ namespace GarageApp
                 }
                 string dirtyInput = Console.ReadLine();
                 string input = UI.CleanInput(dirtyInput);
+                
                 Console.WriteLine($"Input: {input}");
 
                 string[] recievedInformation = input.Split(",");
@@ -138,6 +139,17 @@ namespace GarageApp
             }
         }
 
-
+        internal void ListVehicles()
+        {
+            if (activeGarage.IsEmpty())
+            {
+                Console.WriteLine("Garage is empty!");
+                Console.ReadLine();
+                return;
+            }
+            Console.WriteLine("Vehicles currently in garage: ");
+           activeGarage.GenerateVehicleList();
+            Console.ReadLine();
+        }
     }
 }

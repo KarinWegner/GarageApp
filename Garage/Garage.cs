@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+
 namespace GarageApp
 {
     internal class Garage<T>
@@ -65,6 +66,30 @@ namespace GarageApp
 
             }
             return Capacity;
+        }
+
+        internal bool IsEmpty()
+        {
+            foreach (var item in vehicleArray)
+            {
+                if (item != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        internal void GenerateVehicleList()
+        {
+            var c = from T in vehicleArray
+                    where T is not null
+                    select T.RegNumber;
+            foreach (var item in c) 
+            {
+                Console.WriteLine(item);
+            }
+            return;
         }
     }
 }

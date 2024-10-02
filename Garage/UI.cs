@@ -32,13 +32,16 @@ namespace GarageApp
                                     + "\n"
                                     + "\nNavigate the menu by entering the number in front of action you want to take:"
                                     + "\n1.\tAdd Vehicle to garage"
+                                    +"\n2.\tList Vehicles currently in the garage"
                                     + "\n0.\tExit application");
-                char input = RecieveInput(1);
+                char input = RecieveInput(2);
                 switch (input)
                 {
                     case '1':
-                        Console.WriteLine("case 1:");
                         garageHandler.AddVehicle();
+                        break;
+                    case '2':
+                        garageHandler.ListVehicles();
                         break;
                     case '0':
                         isActive = false;
