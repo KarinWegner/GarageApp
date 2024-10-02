@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 namespace GarageApp
 {
-    internal class Garage
+    internal class Garage<T>
+                   where T : Vehicle
     {
         string name;
         int capacity;
-        Vehicle[] vehicleArray;
+        T[] vehicleArray;
         //ToDo: add list of holdable vehicle types to call when adding new vehicle
 
 
@@ -16,37 +17,19 @@ namespace GarageApp
         {
             this.Name = name;
             this.Capacity = capacity;
-            vehicleArray = new Vehicle[capacity];
+            vehicleArray = new T[capacity];
 
         }
 
-        #region CreateVehicle            
-        public void CreateVehicle(int parkingSpot, string regNumber, string color, int wheelCount)//ToDo: make generic
+        public void AddVehicle(T vehicle, int parkingSpot) 
         {
-            Vehicle vehicle = new Vehicle(regNumber, color, wheelCount);
-            vehicleArray[parkingSpot] = vehicle;                                //ToDo, automate finding a free spot
+            vehicleArray[parkingSpot] = vehicle;
         }
-        public void CreateCar(int parkingsSpot, string regNumber, string color, int wheelCount, string fuelType)
-        {
-            Car car = new Car(regNumber, color, wheelCount, fuelType);
-            vehicleArray[parkingsSpot] = car;
-        }
-        public void CreateMC(int parkingsSpot, string regNumber, string color, int wheelCount, double cylinderVolume)
-        {
-            Motorcycle mc = new Motorcycle(regNumber, color, wheelCount, cylinderVolume);
-            vehicleArray[parkingsSpot] = mc;
-        }
-        public void CreateBus(int parkingsSpot, string regNumber, string color, int wheelCount, int numberOfSeats)
-        {
-            Bus bus = new Bus(regNumber, color, wheelCount, numberOfSeats);
-            vehicleArray[parkingsSpot] = bus;
-        }
-        #endregion CreateVehicle
 
         public Vehicle GetVehicle(int parkingSpot)
         {
             Vehicle vehicle = vehicleArray[parkingSpot];
-            
+
             return vehicle;
         }
         public bool IsFull()
