@@ -19,6 +19,8 @@ namespace GarageApp.Vehicles
         {
             string parametreString = base.SetParametres();
             parametreString += ",Fuel Type";
+
+            Console.WriteLine($"SetParametres: Parametres set to {parametreString}");
             return parametreString;
         }
     }

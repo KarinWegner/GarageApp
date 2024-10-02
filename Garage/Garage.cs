@@ -54,7 +54,17 @@ namespace GarageApp
             return isFull;
         }
 
+        internal int FindParkingSpot()
+        {
+            for (int i = 0; i < Capacity; i++)
+            {
+                if (vehicleArray[i] == null)
+                {
+                    return i;
+                }
 
-
+            }
+            return Capacity;
+        }
     }
 }

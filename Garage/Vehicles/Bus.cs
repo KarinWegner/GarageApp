@@ -19,6 +19,8 @@ namespace GarageApp.Vehicles
         {
             string parametreString = base.SetParametres();
             parametreString += ",Number of seats";
+
+            Console.WriteLine($"SetParametres: Parametres set to {parametreString}");
             return parametreString;
         }
     }

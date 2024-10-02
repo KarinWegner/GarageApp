@@ -52,7 +52,7 @@ namespace GarageApp
         }
         public static char EnterVehicle()
         {
-            Console.Clear();
+            //Console.Clear();
             Console.WriteLine("What kind of vehicle is entering the garage?"
                                + "\n1. Motorcycle"
                                + "\n2. Car"
@@ -123,27 +123,34 @@ namespace GarageApp
         public static string CleanInput(string input)
         {
 
-                input.ToLower();
+            input.ToLower();
             string cleanedInput = "";
 
             string[] inputCleanup = input.Split(',');
-            Console.WriteLine($"InputCleanup: {inputCleanup}");
+            Console.WriteLine($"InputCleanup: {input}");
 
             for (int i = 0; i < inputCleanup.Length; i++)
-            
             {
-                inputCleanup[i].Trim();
+
+                Console.WriteLine($"inputCleanup before trim: '{inputCleanup[i]}'");
+                inputCleanup[i] =inputCleanup[i].Trim();
+                Console.WriteLine($"inputCleanup after trim: '{inputCleanup[i]}'");
 
                 if (!inputCleanup[i].All(Char.IsLetterOrDigit))
                 {
-                    Console.WriteLine("An input you entered contained invalid characters. Input was cleaned. To ensure proper naming, please only use Letters, Periods and Digits.");
+
                     string newString = inputCleanup[i];
                     inputCleanup[i] = "";
                     foreach (char c in newString)       //Rewrites string without invalid characters
                     {
                         if (char.IsLetterOrDigit(c) || c == '.')
                         {
+                            
                             inputCleanup[i] += c;
+                        }
+                        else
+                        {
+                            Console.WriteLine("An input you entered contained invalid characters. Input was cleaned. To ensure proper naming, please only use Letters, Periods and Digits.");
                         }
                     }
 

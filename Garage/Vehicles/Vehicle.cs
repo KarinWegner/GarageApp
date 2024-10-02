@@ -28,7 +28,6 @@ namespace GarageApp.Vehicles
         {
             string parameterString = String.Concat("RegistrationNumber,", "Color,", "Number of Wheels");
 
-            Console.WriteLine($"SetParametres: Parametres set to {parameterString}");
 
             return parameterString;
         }
