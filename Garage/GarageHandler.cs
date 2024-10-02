@@ -16,10 +16,10 @@ namespace GarageApp {
             //garageList = new List<Garage>();
 
             sampleGarage = new("sampleGarage", 4);
-            sampleGarage.CreateVehicle(0,"abc123", "white", 4);
-            sampleGarage.CreateMC(1, "abc123", "white", 2, 4.5);
-            sampleGarage.CreateCar(2, "abc123", "white", 4, "diesel");
-            sampleGarage.CreateBus(3, "abc123", "white", 4, 34);
+            sampleGarage.AddVehicle (new Vehicle("abc123", "white", 4), 0);
+            sampleGarage.AddVehicle(new Motorcycle("abc123", "white", 2, 4.5), 1);
+            sampleGarage.AddVehicle(new Car("abc123", "white", 4, "diesel"), 2);
+            sampleGarage.AddVehicle(new Bus("abc123", "white", 4, 34), 3);
 
         }
         public void AddGarage(string name, int capacity)
