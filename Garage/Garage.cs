@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace GarageApp
 {
@@ -80,19 +81,40 @@ namespace GarageApp
             return true;
         }
 
+     
         internal void GenerateVehicleList()
         {
-            var c = vehicleArray.Where(T => T != null)
+            var c = vehicleArray.Where(T => T != null);
+            c = c.Where(T => T.GetType() == typeof(Car));
+            Console.WriteLine($"Cars: {c.Count()}");
+
+            var mc = vehicleArray.Where(T => T != null);
+            mc = mc.Where(T => T.GetType() == typeof(Motorcycle));
+            Console.WriteLine($"Motorcycles: {mc.Count()}");
+
+            var b = vehicleArray.Where(T => T != null);
+            b = b.Where(T => T.GetType() == typeof(Bus));
+            Console.WriteLine($"Buses: {b.Count()}");
+
+
+
+            var reg = vehicleArray.Where(T => T != null)
                 .OrderBy(T => T.RegNumber)
                 .Select(T => T.RegNumber);
+            var col = vehicleArray.Where(T => T != null)
+                .OrderBy(T => T.RegNumber)
+                .Select(T => T.Color);
+            var veh = vehicleArray.Where(T => T != null)
+                .OrderBy(T => T.RegNumber)
+                .Select(T => T.GetType().Name);
             //var c = from T in vehicleArray
             //        where T is not null
             //        select T.RegNumber;
-            int i = 0;
-            foreach (var item in c) 
+            
+            for (int j = 0; j < reg.Count(); j++)
+            
             {
-                i++;
-                Console.WriteLine($"{i}: {item}");
+                               Console.WriteLine($"{j}:\tRegistration: {reg.ElementAt(j)}\t Type: {veh.ElementAt(j)}");
             }
             return;
         }

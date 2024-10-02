@@ -11,6 +11,9 @@ namespace GarageApp
         // List<Garage> garageList;
         Garage<Vehicle> activeGarage;
         Garage<Vehicle> sampleGarage;
+        private string filterString = "";
+
+        public string FilterString { get; private set; }
 
 
         public GarageHandler()
@@ -19,7 +22,7 @@ namespace GarageApp
 
             sampleGarage = new("sampleGarage", 4);
             sampleGarage.AddVehicle(new Vehicle("abc123", "white", 4), 0);
-            sampleGarage.AddVehicle(new Motorcycle("abc123", "white", 2, 4.5), 1);
+            sampleGarage.AddVehicle(new Motorcycle("abc123", "white", 2, 4), 1);
             sampleGarage.AddVehicle(new Car("abc123", "white", 4, "diesel"), 2);
             sampleGarage.AddVehicle(new Bus("abc123", "white", 4, 34), 3);
 
@@ -162,6 +165,13 @@ namespace GarageApp
 
         internal void ListVehicles()
         {
+            Console.Clear();
+            bool isActive = true;
+            while (isActive)
+            {
+
+          
+
             if (activeGarage.IsEmpty())
             {
                 Console.WriteLine("Garage is empty!");
@@ -170,6 +180,33 @@ namespace GarageApp
             }
             Console.WriteLine("Vehicles currently in garage: ");
             activeGarage.GenerateVehicleList();
+            Console.WriteLine();
+            Console.WriteLine("What would you like to do:"
+                                +"\n 1. Filter Vehicles"
+                                +"\n 2. Find Vehicle details"
+                                +"\n 3. Remove Vehicle"
+                                +"\n 0. Return to Main Menu");
+            char input = UI.RecieveInput(3);
+            switch (input)
+            {
+
+                    case '1':
+                        FilterString = UI.CheckFilters(FilterString);
+
+                        break;
+                    case '2':
+
+                        break;
+                    case '3':
+
+                        break;
+                    case '0':
+                        isActive = false;
+                            break;
+                default:
+                        break;
+            }
+             }         
             Console.ReadLine();
         }
     }

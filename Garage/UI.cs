@@ -82,8 +82,8 @@ namespace GarageApp
 
             }
         }
-        void RecieveInput(string input) { }
-        static char RecieveInput(int maxOptionNumber)
+         void RecieveInput(string input) { }
+        public static char RecieveInput(int maxOptionNumber)
         {
             char returnChar = 'x';
             bool correctInput = false;
@@ -177,6 +177,28 @@ namespace GarageApp
             garageHandler.Seeder();
 
 
+        }
+
+        internal static string CheckFilters(string? currentFilterString)
+        {
+            string? newFilterString = currentFilterString;
+            bool isActive = true;
+            while (isActive)
+            {
+                Console.WriteLine("Currently active filters: ");
+                //ToDo: Make function that separates string into rows and "category: filter", ex "color: red"
+                Console.WriteLine();
+                Console.WriteLine("What do you want to do?"
+                                    +"\n1. Add filter"
+                                    +"\n2. Remove filter"
+                                    +"\n3. Clear filters"
+                                    +"\n4. Apply and view filtered search "
+                                    +"\n0. Return without saving.");
+                char input = RecieveInput(4);
+
+
+            }
+            return newFilterString;
         }
     }
 }
