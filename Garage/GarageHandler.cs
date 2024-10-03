@@ -1,5 +1,4 @@
-﻿
-using Microsoft.VisualBasic.FileIO;
+﻿using Microsoft.VisualBasic.FileIO;
 using System.Drawing;
 using System.IO.Pipes;
 using System.Security.Cryptography;
@@ -163,51 +162,20 @@ namespace GarageApp
             }
         }
 
-        internal void ListVehicles()
+        internal bool ListVehicles()
         {
             Console.Clear();
-            bool isActive = true;
-            while (isActive)
-            {
+            
 
-          
-
-            if (activeGarage.IsEmpty())
-            {
-                Console.WriteLine("Garage is empty!");
-                Console.ReadLine();
-                return;
-            }
-            Console.WriteLine("Vehicles currently in garage: ");
-            activeGarage.GenerateVehicleList();
-            Console.WriteLine();
-            Console.WriteLine("What would you like to do:"
-                                +"\n 1. Filter Vehicles"
-                                +"\n 2. Find Vehicle details"
-                                +"\n 3. Remove Vehicle"
-                                +"\n 0. Return to Main Menu");
-            char input = UI.RecieveInput(3);
-            switch (input)
-            {
-
-                    case '1':
-                        FilterString = UI.CheckFilters(FilterString);
-
-                        break;
-                    case '2':
-
-                        break;
-                    case '3':
-
-                        break;
-                    case '0':
-                        isActive = false;
-                            break;
-                default:
-                        break;
-            }
-             }         
-            Console.ReadLine();
+                if (activeGarage.IsEmpty())
+                {
+                    Console.WriteLine("Garage is empty!");
+                    Console.ReadLine();
+                    return false;
+                }
+                Console.WriteLine("Vehicles currently in garage: ");
+                activeGarage.GenerateVehicleList();
+            return true;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.Design;
 using System.IO.Pipes;
 using System.Security.Cryptography;
 
-namespace GarageApp
+namespace GarageApp.UIFunctions
 {
     public class UI
     {
@@ -32,7 +32,7 @@ namespace GarageApp
                                     + "\n"
                                     + "\nNavigate the menu by entering the number in front of action you want to take:"
                                     + "\n1.\tAdd Vehicle to garage"
-                                    +"\n2.\tList Vehicles currently in the garage"
+                                    + "\n2.\tList Vehicles currently in the garage"
                                     + "\n0.\tExit application");
                 char input = RecieveInput(2);
                 switch (input)
@@ -41,7 +41,7 @@ namespace GarageApp
                         garageHandler.AddVehicle();
                         break;
                     case '2':
-                        garageHandler.ListVehicles();
+                        ViewVehicles();
                         break;
                     case '0':
                         isActive = false;
@@ -53,6 +53,50 @@ namespace GarageApp
             }
 
         }
+
+        private void ViewVehicles()
+        {
+            string filterString = "";
+            bool isActive = true;
+            while (isActive)
+            {
+                isActive = garageHandler.ListVehicles();
+
+                if (!isActive)      //Avslutar metoden om ListVehicles är tom.
+                {
+                    return;
+                }
+
+                Console.WriteLine("What would you like to do:"
+                                    + "\n 1. Filter Vehicles"
+                                    + "\n 2. Find Vehicle details"
+                                    + "\n 3. Remove Vehicle"
+                                    + "\n 0. Return to Main Menu");
+                char input = UI.RecieveInput(3);
+                switch (input)
+                {
+
+                    case '1':
+                        filterString = SearchFilter.CheckFilters(filterString);
+
+                        break;
+                    case '2':
+
+                        break;
+                    case '3':
+
+                        break;
+                    case '0':
+                        isActive = false;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        
+        Console.ReadLine();
+        }
+
         public static char EnterVehicle()
         {
             //Console.Clear();
@@ -73,7 +117,7 @@ namespace GarageApp
                 case '3':
                     return (char)VehicleID.Bus;
                 case '4':
-                    return (char)(VehicleID.Vehicle);
+                    return (char)VehicleID.Vehicle;
                 case '0':
                     return (char)VehicleID.Unknown;
                 default:
@@ -82,7 +126,7 @@ namespace GarageApp
 
             }
         }
-         void RecieveInput(string input) { }
+        void RecieveInput(string input) { }
         public static char RecieveInput(int maxOptionNumber)
         {
             char returnChar = 'x';
@@ -136,10 +180,10 @@ namespace GarageApp
             {
 
                 Console.WriteLine($"inputCleanup before trim: '{inputCleanup[i]}'");
-                inputCleanup[i] =inputCleanup[i].Trim();
+                inputCleanup[i] = inputCleanup[i].Trim();
                 Console.WriteLine($"inputCleanup after trim: '{inputCleanup[i]}'");
 
-                if (!inputCleanup[i].All(Char.IsLetterOrDigit))
+                if (!inputCleanup[i].All(char.IsLetterOrDigit))
                 {
 
                     string newString = inputCleanup[i];
@@ -148,7 +192,7 @@ namespace GarageApp
                     {
                         if (char.IsLetterOrDigit(c) || c == '.')
                         {
-                            
+
                             inputCleanup[i] += c;
                         }
                         else
@@ -159,7 +203,7 @@ namespace GarageApp
 
                 }
 
-                if (String.IsNullOrEmpty(inputCleanup[i]))             //separate if in case previous cleanup left string empty
+                if (string.IsNullOrEmpty(inputCleanup[i]))             //separate if in case previous cleanup left string empty
                 {
                     Console.WriteLine("An input you entered was empty. If you wish to change this, please ensure all inputs contain only Letters and Digits");
                     inputCleanup[i] = "empty";
@@ -177,28 +221,17 @@ namespace GarageApp
             garageHandler.Seeder();
 
 
+            string searchFilter1 = "registration:contains";
+            string searchFilter2 = "color:red,blue,yellow,purple,black,white,orange,green,brown,pink, gray";
+            string searchFilter3 = "wheelcount:moreThan,lessThan,is";
+            List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3 };
+            SearchFilter searchFilter = new SearchFilter(searchFilterList);
+
+
         }
 
-        internal static string CheckFilters(string? currentFilterString)
-        {
-            string? newFilterString = currentFilterString;
-            bool isActive = true;
-            while (isActive)
-            {
-                Console.WriteLine("Currently active filters: ");
-                //ToDo: Make function that separates string into rows and "category: filter", ex "color: red"
-                Console.WriteLine();
-                Console.WriteLine("What do you want to do?"
-                                    +"\n1. Add filter"
-                                    +"\n2. Remove filter"
-                                    +"\n3. Clear filters"
-                                    +"\n4. Apply and view filtered search "
-                                    +"\n0. Return without saving.");
-                char input = RecieveInput(4);
+        
 
 
-            }
-            return newFilterString;
-        }
     }
 }
