@@ -10,14 +10,18 @@ namespace GarageApp.UIFunctions
     internal class SearchFilter
     {
         private string[] filterCategories;
-        public string[][] categoryOptions;
+        private string[][] categoryOptions;
+        private string? activatedFilters;
 
         public static string[] FilterCategories { get; private set; }
         public static string[][] CategoryOptions { get; private set; }
 
+        public static string? ActivatedFilters { get; set; }
+
         //ToDo: Add solving for no filters instantiated
         public SearchFilter(List<string> filterList)
         {
+            activatedFilters = "";
             filterCategories = new string[filterList.Count];
             categoryOptions = new string[filterList.Count][];
             for (int i = 0; i < filterList.Count; i++)
@@ -48,7 +52,7 @@ namespace GarageApp.UIFunctions
                 switch (input)
                 {
                     case '1':
-                        AddFilter();
+                        FindFilter();
                         break;
                     case '2':
                         RemoveFilter();
@@ -68,33 +72,99 @@ namespace GarageApp.UIFunctions
             }
             return newFilterString;
         }
-        public static void RemoveFilter()
+        public static void RemoveFilter(string filter)
         {
-            throw new NotImplementedException();
+            if (!ActivatedFilters.Contains(filter))
+            {
+                Console.WriteLine("Filter is not selected");
+                Console.ReadLine();
+                return;
+            }
+            else
+            {
+
+            }
         }
 
-        public static void AddFilter()
+        public static void AddFilter(string filter)
         {
-            Console.WriteLine("What category would you like to filter for?");
-            for (int i = 0; i < FilterCategories.Length; i++)
+            if (!ActivatedFilters.Contains(filter))
             {
-                Console.WriteLine($"{i+1}: {FilterCategories[i]}");
+                Console.WriteLine("Added filter to list!");
+
+
+                if(!string.IsNullOrEmpty(ActivatedFilters))
+                    ActivatedFilters += ",";     //First string in ActivatedFilters doesn't need the comma
+                
+                ActivatedFilters += filter;
+
+                return;
             }
-            char input = UI.RecieveInput(FilterCategories.Length);
+           else
+            {
+                Console.WriteLine($"Filter {filter} has already been selected. Do you want to deselect it?"
+                                    + "\n 1. Yes"
+                                    + "\n 0. No");
+                char input = UI.RecieveInput(1);
+                switch (input)
+                {
+                    case '1':
+                        RemoveFilter(filter);
+                        return;
+                    case '0':Console.WriteLine("Returning to previous menu.");
+                        Console.ReadLine();
+                        return;
+                    default :
+                        Console.WriteLine("An error has occured. Returning to previous menu.");
+                        Console.ReadLine();
+                        return; ;
+                }
+               
+            }
+
+
         }
         public static void FindFilter()
         {
-            /*
-                Available things to filter:
-                Registration numbers?       Color                           Number of Wheels
-                *Contains Letter/Digit     Select one or many colors        Specific amount
-                *                          Pick from list?                  More than
-                *                                                           Less than
-             
-             Maybe later: Does NOT contain X
-           */
+            bool isActive = true;
+            while (isActive)
+            {
+                Console.WriteLine("What category would you like to filter for?");
 
 
+                for (int i = 0; i < FilterCategories.Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}: {FilterCategories[i]}");
+                }
+                Console.WriteLine("0. return to previous menu");
+                char input = UI.RecieveInput(FilterCategories.Length);
+
+                if (input == '0')
+                {
+                    return;
+                }
+
+                int selectedCategory = input - 1;
+                Console.WriteLine($"Which filter in{FilterCategories[selectedCategory]} would you like to add?"
+                                    + "Hint: Select an already added filter to remove it");
+
+                for (int i = 0; i < CategoryOptions[selectedCategory].Length; i++)
+                {
+                    Console.WriteLine($"{i + 1}: {CategoryOptions[selectedCategory][i]}");
+                }
+                Console.WriteLine("0. Cancel and return to previous menu.");
+                input = UI.RecieveInput(FilterCategories[selectedCategory].Length);
+
+                if (input == '0')
+                {
+                    continue;                                                           //starts sequence over
+                }
+                int selectedOption = input - 1;
+                string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption];
+
+                Console.WriteLine($"Adding filter {completeFilterString}");
+                AddFilter(completeFilterString);
+            }
         }
     }
 }

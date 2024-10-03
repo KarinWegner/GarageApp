@@ -126,7 +126,7 @@ namespace GarageApp.UIFunctions
 
             }
         }
-        void RecieveInput(string input) { }
+        void RecieveBigInput(string input) { }
         public static char RecieveInput(int maxOptionNumber)
         {
             char returnChar = 'x';
@@ -222,7 +222,7 @@ namespace GarageApp.UIFunctions
 
 
             string searchFilter1 = "registration:contains";
-            string searchFilter2 = "color:red,blue,yellow,purple,black,white,orange,green,brown,pink, gray";
+            string searchFilter2 = "color:red,blue,yellow,purple,black,white,orange,green,brown,pink,gray";
             string searchFilter3 = "wheelcount:moreThan,lessThan,is";
             List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3 };
             SearchFilter searchFilter = new SearchFilter(searchFilterList);
