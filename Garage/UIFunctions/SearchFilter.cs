@@ -16,20 +16,19 @@ namespace GarageApp.UIFunctions
         public static string[] FilterCategories { get; private set; }
         public static string[][] CategoryOptions { get; private set; }
 
-        public static string? ActivatedFilters { get; set; }
+        public static string? ActiveFilters { get; set; }
 
         //ToDo: Add solving for no filters instantiated
         public SearchFilter(List<string> filterList)
         {
             activatedFilters = "";
-            filterCategories = new string[filterList.Count];
-            categoryOptions = new string[filterList.Count][];
+            FilterCategories = new string[filterList.Count];
+            CategoryOptions = new string[filterList.Count][];
             for (int i = 0; i < filterList.Count; i++)
             {
-                FilterCategories[i] = (filterList[i].Reverse().ToString().Substring(filterList[i].IndexOf(':')).Reverse().ToString());//Reverses filterList string, gets substring from : and reverses string back
-                Console.WriteLine(filterCategories);
-
-                CategoryOptions[i] = filterList[i].Substring(filterList[i].IndexOf(':')).Split(','); //Adds the categories to an array of options separated by category
+                FilterCategories[i] = filterList[i].Substring(0,filterList[i].IndexOf(':'));
+             
+                CategoryOptions[i] = filterList[i].Substring(filterList[i].IndexOf(':')+1).Split(','); //Adds the categories to an array of options separated by category
             }
         }
 
@@ -52,10 +51,10 @@ namespace GarageApp.UIFunctions
                 switch (input)
                 {
                     case '1':
-                        FindFilter();
+                        AddFilter(FindFilter());
                         break;
                     case '2':
-                        RemoveFilter();
+                        RemoveFilter(FindFilter());
                         break;
                     case '3':
                         break;
@@ -74,7 +73,11 @@ namespace GarageApp.UIFunctions
         }
         public static void RemoveFilter(string filter)
         {
-            if (!ActivatedFilters.Contains(filter))
+            if (filter == "")
+            {
+                return;
+            }
+            if (!ActiveFilters.Contains(filter))
             {
                 Console.WriteLine("Filter is not selected");
                 Console.ReadLine();
@@ -82,21 +85,42 @@ namespace GarageApp.UIFunctions
             }
             else
             {
-
+                string newFilters = "";
+                string[] filters = filter.Split(',');
+                for (int i = 0; i < filters.Length; i++)
+                {
+                    if (!filters[i].Contains(filter))
+                    {
+                        if (!string.IsNullOrEmpty(newFilters))
+                        {
+                            newFilters += "," + filter;
+                        }
+                        else
+                        {
+                            newFilters += filter;
+                        }
+                    }
+                }
+                ActiveFilters = newFilters;
+                return;
             }
         }
 
         public static void AddFilter(string filter)
         {
-            if (!ActivatedFilters.Contains(filter))
+            if (filter == "")
+            {
+                return;
+            }
+            if (!ActiveFilters.Contains(filter))
             {
                 Console.WriteLine("Added filter to list!");
 
 
-                if(!string.IsNullOrEmpty(ActivatedFilters))
-                    ActivatedFilters += ",";     //First string in ActivatedFilters doesn't need the comma
+                if(!string.IsNullOrEmpty(ActiveFilters))
+                    ActiveFilters += ",";     //First string in ActivatedFilters doesn't need the comma
                 
-                ActivatedFilters += filter;
+                ActiveFilters += filter;
 
                 return;
             }
@@ -124,11 +148,12 @@ namespace GarageApp.UIFunctions
 
 
         }
-        public static void FindFilter()
+        public static string? FindFilter()
         {
             bool isActive = true;
             while (isActive)
             {
+
                 Console.WriteLine("What category would you like to filter for?");
 
 
@@ -141,7 +166,7 @@ namespace GarageApp.UIFunctions
 
                 if (input == '0')
                 {
-                    return;
+                    return "";
                 }
 
                 int selectedCategory = input - 1;
@@ -163,8 +188,9 @@ namespace GarageApp.UIFunctions
                 string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption];
 
                 Console.WriteLine($"Adding filter {completeFilterString}");
-                AddFilter(completeFilterString);
+                return completeFilterString;
             }
+            return "";
         }
     }
 }

@@ -19,7 +19,6 @@ namespace GarageApp.Vehicles
             string parametreString = base.SetParametres();
             parametreString += ",Cylinder Volume";
 
-            Console.WriteLine($"SetParametres: Parametres set to {parametreString}");
             return parametreString;
         }
     }
