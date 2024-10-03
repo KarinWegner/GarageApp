@@ -77,7 +77,7 @@ namespace GarageApp.UIFunctions
                 {
 
                     case '1':
-                        filterString = SearchFilter.CheckFilters(filterString);
+                        filterString = SearchFilter.CheckFilters();
 
                         break;
                     case '2':
@@ -93,8 +93,8 @@ namespace GarageApp.UIFunctions
                         break;
                 }
             }
-        
-        Console.ReadLine();
+
+            Console.ReadLine();
         }
 
         public static char EnterVehicle()
@@ -126,7 +126,47 @@ namespace GarageApp.UIFunctions
 
             }
         }
-        void RecieveBigInput(string input) { }
+        public static int RecieveBigInput(int maxOptionNumber)
+        {
+            int returnInt = 0;
+            bool correctInput = false;
+            do
+            {
+                int numberInput; //onåbart av char
+
+                bool isNumber = false;
+                string input = Console.ReadLine();
+                try
+                {
+
+
+
+                    isNumber = int.TryParse(input, out _);
+                    if (isNumber)
+                    {
+                        numberInput = int.Parse(input);
+                        if (maxOptionNumber < numberInput)
+                        {
+                            Console.WriteLine("Option not available. Please enter the number of the menu choice you want to choose:"); Console.WriteLine();
+                        }
+                        else
+                        {
+                            returnInt = numberInput;
+                            correctInput = true;
+
+                        }
+                    }
+
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+
+            } while (!correctInput);
+            return returnInt;
+        }
         public static char RecieveInput(int maxOptionNumber)
         {
             char returnChar = 'x';
@@ -230,7 +270,7 @@ namespace GarageApp.UIFunctions
 
         }
 
-        
+
 
 
     }
