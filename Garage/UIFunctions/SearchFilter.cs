@@ -106,7 +106,7 @@ namespace GarageApp.UIFunctions
             int selectedOption = 0;
             if (currentFilters.Length > 9)
             {
-                int bigInput = UI.RecieveBigInput(currentFilters.Length);
+                int bigInput = UI.RecieveIntInput(currentFilters.Length);
 
                 selectedOption = bigInput - 1;
             }
@@ -179,6 +179,10 @@ namespace GarageApp.UIFunctions
 
                 ActiveFilters += filter;
 
+                string[] ActiveFilterSorter = ActiveFilters.Split(',');
+                Array.Sort(ActiveFilterSorter);
+                ActiveFilters = string.Join(",",ActiveFilterSorter);
+
                 return;
             }
             else
@@ -229,7 +233,7 @@ namespace GarageApp.UIFunctions
 
                 int selectedCategory = (int)Char.GetNumericValue(input);
                 selectedCategory -= 1;
-                //        Console.WriteLine($"Which filter in{FilterCategories[selectedCategory]} would you like to add?"
+                Console.WriteLine($"Which filter in{FilterCategories[selectedCategory]} would you like to add?");
                 //                       + "\nHint: Select an already added filter to remove it");
 
                 for (int i = 0; i < CategoryOptions[selectedCategory].Length; i++)
@@ -240,9 +244,9 @@ namespace GarageApp.UIFunctions
 
                 int bigInput = 0;
                 int selectedOption = 0;
-                if (FilterCategories[selectedCategory].Length > 9)
+                if (CategoryOptions[selectedCategory].Count() > 9)
                 {
-                    bigInput = UI.RecieveBigInput(FilterCategories[selectedCategory].Length);
+                    bigInput = UI.RecieveIntInput(FilterCategories[selectedCategory].Length);
 
                     selectedOption = bigInput - 1;
                 }
@@ -258,11 +262,14 @@ namespace GarageApp.UIFunctions
                 }
                 string? enteredData = "";
 
-                string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption] + enteredData;
+                string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption];
 
                 if (CategoryOptions[selectedCategory][selectedOption].Contains('_'))
                 {
+                    //ToDo: find better way to find if input requires only int or char input
+                    
                     enteredData = UI.RecieveCustomInput(completeFilterString);
+                    completeFilterString += enteredData;
                 }
 
                 Console.WriteLine($"Adding filter {completeFilterString}");

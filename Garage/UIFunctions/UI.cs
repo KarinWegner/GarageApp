@@ -127,13 +127,13 @@ namespace GarageApp.UIFunctions
 
             }
         }
-        public static int RecieveBigInput(int maxOptionNumber)
+        public static int RecieveIntInput(int maxOptionNumber)
         {
             int returnInt = 0;
             bool correctInput = false;
             do
             {
-                int numberInput; //onåbart av char
+                int numberInput; 
 
                 bool isNumber = false;
                 string input = Console.ReadLine();
@@ -215,21 +215,49 @@ namespace GarageApp.UIFunctions
             cleanedCategory = category.Replace(':', ' ').Replace('_', ':');
             string customInput = "";
             bool correctInput = false;
-            
+
             do
             {
                 Console.WriteLine("Enter filter specification:");
                 Console.WriteLine(cleanedCategory);
                 Console.WriteLine();
 
-
-                string input = Console.ReadLine();
-
-                if (string.IsNullOrEmpty(input))
+                if (category.Contains("wheel count"))
                 {
-                    Console.WriteLine("Error: Input is empty");
+                    customInput = UI.RecieveIntInput(10).ToString();
+                    correctInput = true;
                 }
+                else if (category.Contains("registration number"))
+                {
+                    customInput = UI.CleanInput(Console.ReadLine());          //Hämtar ut en char som är nummer eller siffra, alt ger den e från empty
+                    if (customInput == "empty")
+                    {
+                        Console.WriteLine("No valid characters were entered. Please try again.");
+                    }
+                    else
+                    {
+                        customInput = customInput[0].ToString().ToUpper();
 
+                        correctInput = true;
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Error in detecting filter category. Please enter your input");
+                    string input = Console.ReadLine();
+
+
+                    if (string.IsNullOrEmpty(input))
+                    {
+                        Console.WriteLine("Error: Input is empty");
+                    }
+                    else
+                    {
+                        customInput = input;
+                        correctInput = true;
+                    }
+                }
 
 
             } while (!correctInput);
@@ -258,7 +286,7 @@ namespace GarageApp.UIFunctions
                     inputCleanup[i] = "";
                     foreach (char c in newString)       //Rewrites string without invalid characters
                     {
-                        if (char.IsLetterOrDigit(c) || c == '.')
+                        if (char.IsLetterOrDigit(c) /*|| c == '.'*/)  //Not using floats anymore, don't need '.'
                         {
 
                             inputCleanup[i] += c;
@@ -289,11 +317,11 @@ namespace GarageApp.UIFunctions
             garageHandler.Seeder();
 
 
-            string searchFilter1 = "registration:contains character_";
+            string searchFilter1 = "registration number:contains character_";
             string searchFilter2 = "color:red,blue,yellow,purple,black,white,orange,green,brown,pink,gray";
-            string searchFilter3 = "wheel count:more than_,less than_,is_";
-            string searchFilter4 = "vehicle type:car,motorcycle, bus, vehicle";
-            List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3 };
+            string searchFilter3 = "wheel count:more than_,less than_";
+            string searchFilter4 = "vehicle type:Car,Motorcycle,Bus,Vehicle";
+            List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3, searchFilter4};
             SearchFilter searchFilter = new SearchFilter(searchFilterList);
 
 
