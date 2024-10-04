@@ -2,6 +2,7 @@
 using System.ComponentModel.Design;
 using System.IO.Pipes;
 using System.Security.Cryptography;
+using System.Threading.Channels;
 
 namespace GarageApp.UIFunctions
 {
@@ -60,7 +61,7 @@ namespace GarageApp.UIFunctions
             bool isActive = true;
             while (isActive)
             {
-                isActive = garageHandler.ListVehicles();
+                isActive = garageHandler.ListVehicles(SearchFilter.ActiveFilters);
 
                 if (!isActive)      //Avslutar metoden om ListVehicles är tom.
                 {
@@ -207,6 +208,33 @@ namespace GarageApp.UIFunctions
             } while (!correctInput);
             return returnChar;
         }
+
+        public static string RecieveCustomInput(string category)
+        {
+            string cleanedCategory;
+            cleanedCategory = category.Replace(':', ' ').Replace('_', ':');
+            string customInput = "";
+            bool correctInput = false;
+            
+            do
+            {
+                Console.WriteLine("Enter filter specification:");
+                Console.WriteLine(cleanedCategory);
+                Console.WriteLine();
+
+
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Error: Input is empty");
+                }
+
+
+
+            } while (!correctInput);
+            return customInput;
+        }
         public static string CleanInput(string input)
         {
 
@@ -261,9 +289,10 @@ namespace GarageApp.UIFunctions
             garageHandler.Seeder();
 
 
-            string searchFilter1 = "registration:contains";
+            string searchFilter1 = "registration:contains character_";
             string searchFilter2 = "color:red,blue,yellow,purple,black,white,orange,green,brown,pink,gray";
-            string searchFilter3 = "wheelcount:moreThan,lessThan,is";
+            string searchFilter3 = "wheel count:more than_,less than_,is_";
+            string searchFilter4 = "vehicle type:car,motorcycle, bus, vehicle";
             List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3 };
             SearchFilter searchFilter = new SearchFilter(searchFilterList);
 

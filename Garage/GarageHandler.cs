@@ -162,7 +162,7 @@ namespace GarageApp
             }
         }
 
-        internal bool ListVehicles()
+        internal bool ListVehicles(string? filterList)
         {
             Console.Clear();
             
@@ -174,7 +174,7 @@ namespace GarageApp
                     return false;
                 }
                 Console.WriteLine("Vehicles currently in garage: ");
-                activeGarage.GenerateVehicleList();
+                activeGarage.GenerateVehicleList(filterList);
             return true;
         }
     }

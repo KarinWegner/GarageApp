@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Drawing;
 using System.Runtime.InteropServices;
 
 namespace GarageApp
@@ -23,7 +24,7 @@ namespace GarageApp
 
         }
 
-        public void AddVehicle(T vehicle, int parkingSpot) 
+        public void AddVehicle(T vehicle, int parkingSpot)
         {
             vehicleArray[parkingSpot] = vehicle;
         }
@@ -81,9 +82,46 @@ namespace GarageApp
             return true;
         }
 
-     
-        internal void GenerateVehicleList()
+
+        internal void GenerateVehicleList(string? filters)
         {
+
+            if (!string.IsNullOrEmpty(filters))
+            {
+
+
+                List<IEnumerable> filteredList = new List<IEnumerable>();
+                string[] filterArray = filters.Split(',');
+                string[] filterCategories = new string[filterArray.Length];
+                string[] categoryOptions = new string[filterArray.Length];
+
+                for (int i = 0; i < filterArray.Length; i++)
+                {
+
+
+                    filterCategories[i] = filterArray[i].Substring(0, filterArray[i].IndexOf(':'));
+
+                    categoryOptions[i] = filterArray[i].Substring(filterArray[i].IndexOf(':') + 1);
+                }
+                for (int i = 0; i < filterArray.Length; i++)
+                {
+
+                    var filter = vehicleArray.Where(T => T != null)
+                                             .Where(T => T.Color == categoryOptions[i])
+                                             .Select(T => T.Color);
+                    filteredList.Add(filter);
+                
+                foreach (var item in filteredList[i])
+                {
+                    Console.WriteLine(item);
+                }}
+                
+            }
+
+            Console.ReadLine();
+
+
+
             var c = vehicleArray.Where(T => T != null);
             c = c.Where(T => T.GetType() == typeof(Car));
             Console.WriteLine($"Cars: {c.Count()}");
@@ -110,11 +148,10 @@ namespace GarageApp
             //var c = from T in vehicleArray
             //        where T is not null
             //        select T.RegNumber;
-            
             for (int j = 0; j < reg.Count(); j++)
-            
+
             {
-                               Console.WriteLine($"{j}:\tRegistration: {reg.ElementAt(j)}\t Type: {veh.ElementAt(j)}");
+                Console.WriteLine($"{j}:\tRegistration: {reg.ElementAt(j)}\t Type: {veh.ElementAt(j)}");
             }
             return;
         }

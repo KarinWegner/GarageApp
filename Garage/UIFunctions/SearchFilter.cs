@@ -68,6 +68,7 @@ namespace GarageApp.UIFunctions
                         RemoveFilter();
                         break;
                     case '3':
+                        ClearFilters();
                         break;
                     case '4':
                         break;
@@ -82,6 +83,12 @@ namespace GarageApp.UIFunctions
             }
             return ActiveFilters;
         }
+
+        private static void ClearFilters()
+        {
+            throw new NotImplementedException();
+        }
+
         public static void RemoveFilter()
         {
             if (string.IsNullOrEmpty(ActiveFilters))
@@ -249,7 +256,14 @@ namespace GarageApp.UIFunctions
                 {
                     continue;                                                           //starts sequence over
                 }
-                string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption];
+                string? enteredData = "";
+
+                string completeFilterString = FilterCategories[selectedCategory] + ":" + CategoryOptions[selectedCategory][selectedOption] + enteredData;
+
+                if (CategoryOptions[selectedCategory][selectedOption].Contains('_'))
+                {
+                    enteredData = UI.RecieveCustomInput(completeFilterString);
+                }
 
                 Console.WriteLine($"Adding filter {completeFilterString}");
                 return completeFilterString;
