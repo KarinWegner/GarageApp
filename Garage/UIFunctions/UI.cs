@@ -323,6 +323,7 @@ namespace GarageApp.UIFunctions
             string searchFilter4 = "vehicle type:Car,Motorcycle,Bus,Vehicle";
             List<string> searchFilterList = new List<string> { searchFilter1, searchFilter2, searchFilter3, searchFilter4};
             SearchFilter searchFilter = new SearchFilter(searchFilterList);
+            SearchFilter.ActiveFilters = "color:red,color:blue,registration number:contains character_X,registration number:contains character_1,registration number:contains character_V";
 
 
         }
