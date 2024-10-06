@@ -146,6 +146,10 @@ namespace GarageApp
                     }
                     else                                                         // Om nuvarande kategorin är samma som den innan concatas nya samlingen till concatsamlingen
                     {
+                        if (filterCategories[i] == "wheel count")//måste intersectas med sig själv
+                        {
+                            combinedCategoryCollection = (combinedCategoryCollection ?? Enumerable.Empty<T>()).Intersect(GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>());
+                        }
                         combinedCategoryCollection = (combinedCategoryCollection ?? Enumerable.Empty<T>()).Concat(GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>());
 
                     }
