@@ -202,7 +202,10 @@ namespace GarageApp
                 activeGarage.RemoveVehicle(input);
             }
             else
+            {
                 Console.WriteLine("Vehicle with matching registration number coild not be found. ");
+                Console.ReadLine();
+            }
         }
     }
 }

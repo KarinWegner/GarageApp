@@ -285,9 +285,10 @@ namespace GarageApp
         internal void RemoveVehicle(string input)
         {
             var removedVehicle = vehicleArray.Where(T => T != null)
-                .Where(T => T.RegNumber == input);
+                .Single(T => T.RegNumber == input);
+            int vehiclePosition = Array.IndexOf(vehicleArray, removedVehicle);
+            vehicleArray[vehiclePosition] = null;
 
-            removedVehicle = null;
         }
     }
 }
