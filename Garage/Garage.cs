@@ -93,13 +93,7 @@ namespace GarageApp
             {
 
 
-                List<IEnumerable> wheelCountFilterList = new List<IEnumerable>();
-                IEnumerable<T> wheelFilters;
-                List<IEnumerable> colorFilterList = new List<IEnumerable>();
-                List<IEnumerable> regFilterList = new List<IEnumerable>();
-                List<IEnumerable> vehicleFilterList = new List<IEnumerable>();
-                List<IEnumerable> compiledFilterList = new List<IEnumerable>();
-                List<IEnumerable> filterList = new List<IEnumerable>();
+
                 string[] filterArray = filters.Split(',');
                 string[] filterCategories = new string[filterArray.Length];
                 string[] categoryOptions = new string[filterArray.Length];
@@ -118,14 +112,55 @@ namespace GarageApp
                         categoryOptions[i] = categoryOptions[i].Substring(0, categoryOptions[i].IndexOf("_"));          //removes subcategory from category
                     }
                 }
-                IEnumerable<T>? filteredVehicleColleciton = GetFilterList(filterCategories[0], categoryOptions[0], subCategoryOptions[0]) ?? Enumerable.Empty<T>();
+                IEnumerable<T>? filteredVehicleColleciton = Enumerable.Empty<T>();
+                IEnumerable<T>? combinedCategoryCollection = GetFilterList(filterCategories[0], categoryOptions[0], subCategoryOptions[0]) ?? Enumerable.Empty<T>(); //Lägger in första filtret i concatsamlingen så koden under inte kraschar
                 //Creating lists of sorted vehicles for each filter
 
+                bool concatenatingCategories = false;
                 for (int i = 1; i < filterArray.Length; i++)
                 {
-                    filteredVehicleColleciton = (filteredVehicleColleciton ?? Enumerable.Empty<T>()).Intersect(GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>());
 
+                    if (filterCategories[i] != filterCategories[i - 1])     //Om nuvarande kategorin inte är samma som den innan
+                    {
+                        //       if (concatenatingCategories)                   //   men concatenatingCategories == true
+                        //       {
+
+                        if (combinedCategoryCollection.Count() > 0)        //Lägger bara till intersecten om den faktiskt har något att filtrera.
+                        {
+                            if (filteredVehicleColleciton.Count() != 0)
+                            {
+                                filteredVehicleColleciton = (filteredVehicleColleciton ?? Enumerable.Empty<T>()).Intersect((combinedCategoryCollection ?? Enumerable.Empty<T>())); //intersecta in den sparade combinedCategoryCollection i filtreradesamlingen
+                            }
+
+                            else
+                                filteredVehicleColleciton = combinedCategoryCollection;     //Påbörjar filteredvehiclecollection om den inte redan är igång
+
+                        }
+                        //töm concatsamlingen, spara om som nuvarande listan
+                        combinedCategoryCollection = GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>();
+                      //  concatenatingCategories = false;
+
+                        //     }
+                        //Samlar alla fordon som passar in i den kategorins filtrering
+
+                    }
+                    else                                                         // Om nuvarande kategorin är samma som den innan concatas nya samlingen till concatsamlingen
+                    {
+                        combinedCategoryCollection = (combinedCategoryCollection ?? Enumerable.Empty<T>()).Concat(GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>());
+
+                    }
+                  
+
+                    //filteredVehicleColleciton = (filteredVehicleColleciton ?? Enumerable.Empty<T>()).Intersect(GetFilterList(filterCategories[i], categoryOptions[i], subCategoryOptions[i]) ?? Enumerable.Empty<T>());
+
+                }          //Lägger på den sista samlingen
+                if (filterArray.Length == 1)
+                {
+                    filteredVehicleColleciton = combinedCategoryCollection;
                 }
+                else
+                        filteredVehicleColleciton = (filteredVehicleColleciton ?? Enumerable.Empty<T>()).Intersect((combinedCategoryCollection ?? Enumerable.Empty<T>()));
+                    
                 var regFiltered = filteredVehicleColleciton.Select(T => T.RegNumber);
                 var colFiltered = filteredVehicleColleciton.Select(T => T.Color);
                 var typeFiltered = filteredVehicleColleciton.Select(T => T.GetType().Name);
