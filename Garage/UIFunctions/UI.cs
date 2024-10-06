@@ -70,10 +70,10 @@ namespace GarageApp.UIFunctions
 
                 Console.WriteLine("What would you like to do:"
                                     + "\n 1. Filter Vehicles"
-                                    + "\n 2. Find Vehicle details"
-                                    + "\n 3. Remove Vehicle"
+                                    
+                                    + "\n 2. Remove Vehicle"
                                     + "\n 0. Return to Main Menu");
-                char input = UI.RecieveInput(3);
+                char input = UI.RecieveInput(2);
                 switch (input)
                 {
 
@@ -82,7 +82,7 @@ namespace GarageApp.UIFunctions
 
                         break;
                     case '2':
-
+                        garageHandler.RemoveVehicle();
                         break;
                     case '3':
 
@@ -236,7 +236,7 @@ namespace GarageApp.UIFunctions
                     }
                     else
                     {
-                        customInput = customInput[0].ToString().ToUpper();
+                        customInput = customInput[0].ToString().ToLower();
 
                         correctInput = true;
 

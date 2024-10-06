@@ -57,7 +57,7 @@ namespace GarageApp.UIFunctions
                                     + "\n2. Remove filter"
                                     + "\n3. Clear filters"
                                     + "\n0. Apply and view filtered search ");
-                char input = UI.RecieveInput(4);
+                char input = UI.RecieveInput(3);
                 switch (input)
                 {
                     case '1':

@@ -281,5 +281,13 @@ namespace GarageApp
             //}
             return found;
         }
+
+        internal void RemoveVehicle(string input)
+        {
+            var removedVehicle = vehicleArray.Where(T => T != null)
+                .Where(T => T.RegNumber == input);
+
+            removedVehicle = null;
+        }
     }
 }

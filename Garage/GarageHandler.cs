@@ -40,19 +40,19 @@ namespace GarageApp
         public void Seeder()
         {
 
-            activeGarage.AddVehicle(new Motorcycle("JTS647", "blue", 2, 10), 0);
-            activeGarage.AddVehicle(new Bus("XUG175", "red", 6, 30), 1);
-            activeGarage.AddVehicle(new Motorcycle("MQP032", "purple", 2, 5), 2);
-            activeGarage.AddVehicle(new Car("HLV759", "green", 4, "diesel"), 3);
-            activeGarage.AddVehicle(new Car("PTF070", "blue", 4, "petrol"), 4);
-            activeGarage.AddVehicle(new Bus("RVM104", "blue", 4, 18), 5);
-            activeGarage.AddVehicle(new Bus("MSB786", "black", 6, 28), 6);
-            activeGarage.AddVehicle(new Motorcycle("XDB238", "red", 2, 1), 7);
-            activeGarage.AddVehicle(new Motorcycle("TQY456", "red", 3, 5), 8);
-            activeGarage.AddVehicle(new Car("JFN060", "blue", 4, "petrol"), 9);
-            activeGarage.AddVehicle(new Motorcycle("YIJ473", "purple", 2, 5), 10);
-            activeGarage.AddVehicle(new Bus("LFT899", "black", 8, 42), 11);
-            activeGarage.AddVehicle(new Motorcycle("ZPF596", "gray", 2, 2), 12);
+            activeGarage.AddVehicle(new Motorcycle("jts647", "blue", 2, 10), 0);
+            activeGarage.AddVehicle(new Bus("xug175", "red", 6, 30), 1);
+            activeGarage.AddVehicle(new Motorcycle("mqp032", "purple", 2, 5), 2);
+            activeGarage.AddVehicle(new Car("hlv759", "green", 4, "diesel"), 3);
+            activeGarage.AddVehicle(new Car("ptf070", "blue", 4, "petrol"), 4);
+            activeGarage.AddVehicle(new Bus("rmv104", "blue", 4, 18), 5);
+            activeGarage.AddVehicle(new Bus("msb786", "black", 6, 28), 6);
+            activeGarage.AddVehicle(new Motorcycle("xdb238", "red", 2, 1), 7);
+            activeGarage.AddVehicle(new Motorcycle("tqy456", "red", 3, 5), 8);
+            activeGarage.AddVehicle(new Car("jfn060", "blue", 4, "petrol"), 9);
+            activeGarage.AddVehicle(new Motorcycle("yij473", "purple", 2, 5), 10);
+            activeGarage.AddVehicle(new Bus("lft899", "black", 8, 42), 11);
+            activeGarage.AddVehicle(new Motorcycle("zpf596", "gray", 2, 2), 12);
             return;
 
         }
@@ -184,6 +184,25 @@ namespace GarageApp
             Console.WriteLine("Vehicles currently in garage: ");
             activeGarage.GenerateVehicleList(filterList);
             return true;
+        }
+
+        internal void RemoveVehicle()
+        {
+            Console.WriteLine("Please enter the registration number of the vehicle you'd like to remove:");
+            Console.WriteLine("Leave input empty to return to previous menu.");
+            string input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+                return;
+
+            bool vehicleInGarage = activeGarage.FindVehicle(input);
+
+            if (vehicleInGarage)
+            {
+                Console.WriteLine("Vehicle found! Removing from garage");
+                activeGarage.RemoveVehicle(input);
+            }
+            else
+                Console.WriteLine("Vehicle with matching registration number coild not be found. ");
         }
     }
 }
