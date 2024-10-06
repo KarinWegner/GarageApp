@@ -86,7 +86,8 @@ namespace GarageApp.UIFunctions
 
         private static void ClearFilters()
         {
-            throw new NotImplementedException();
+            ActiveFilters = "";
+            return;
         }
 
         public static void RemoveFilter()
