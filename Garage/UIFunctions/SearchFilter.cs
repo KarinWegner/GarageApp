@@ -56,8 +56,7 @@ namespace GarageApp.UIFunctions
                                     + "\n1. Add filter"
                                     + "\n2. Remove filter"
                                     + "\n3. Clear filters"
-                                    + "\n4. Apply and view filtered search "
-                                    + "\n0. Return without saving.");
+                                    + "\n0. Apply and view filtered search ");
                 char input = UI.RecieveInput(4);
                 switch (input)
                 {
@@ -69,8 +68,6 @@ namespace GarageApp.UIFunctions
                         break;
                     case '3':
                         ClearFilters();
-                        break;
-                    case '4':
                         break;
                     case '0':
                         isActive = false;
@@ -182,7 +179,7 @@ namespace GarageApp.UIFunctions
 
                 string[] ActiveFilterSorter = ActiveFilters.Split(',');
                 Array.Sort(ActiveFilterSorter);
-                ActiveFilters = string.Join(",",ActiveFilterSorter);
+                ActiveFilters = string.Join(",", ActiveFilterSorter);
 
                 return;
             }
@@ -268,7 +265,7 @@ namespace GarageApp.UIFunctions
                 if (CategoryOptions[selectedCategory][selectedOption].Contains('_'))
                 {
                     //ToDo: find better way to find if input requires only int or char input
-                    
+
                     enteredData = UI.RecieveCustomInput(completeFilterString);
                     completeFilterString += enteredData;
                 }

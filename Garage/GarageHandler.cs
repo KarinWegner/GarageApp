@@ -112,40 +112,49 @@ namespace GarageApp
                     color = recievedInformation[1];
                     wheelCount = int.Parse(recievedInformation[2]);
 
-                    //ToDo: Add parkingSpots
-                    switch ((int)vehicleType)
+                    bool repeatedRegNumber = activeGarage.FindVehicle(regNumber);
+                    if (repeatedRegNumber)
                     {
-                        case 1:
-                            Vehicle vehicle = new(regNumber, color, wheelCount);
-                            activeGarage.AddVehicle(vehicle, parkingSpot);
-                            Console.WriteLine("ADDED VEHICLE");
-
-                            Console.ReadLine();
-                            break;
-                        case 2:
-                            int cylinderCount = int.Parse(recievedInformation[3]);
-                            activeGarage.AddVehicle(new Motorcycle(regNumber, color, wheelCount, cylinderCount), parkingSpot);
-                            Console.WriteLine("ADDED MC");
-                            Console.ReadLine();
-                            break;
-                        case 3:
-                            string fuelType = recievedInformation[3];
-                            activeGarage.AddVehicle(new Car(regNumber, color, wheelCount, fuelType), parkingSpot);
-                            Console.WriteLine(" ADDED CAR");
-                            Console.ReadLine();
-                            break;
-                        case 4:
-                            int numberOfSeats = int.Parse(recievedInformation[3]);
-                            activeGarage.AddVehicle(new Bus(regNumber, color, wheelCount, numberOfSeats), parkingSpot);
-                            Console.WriteLine("ADDED BUS");
-                            Console.ReadLine();
-                            break;
-                        default:
-                            Console.WriteLine("Error.");
-                            Console.ReadLine();
-                            break;
+                        Console.WriteLine("There is already a vehicle with the entered registration number! Vehicle cannot be entered.");
                     }
+                    else
+                    {
+                        //ToDo: Add parkingSpots
+                        switch ((int)vehicleType)
+                        {
+                            case 1:
+                                Vehicle vehicle = new(regNumber, color, wheelCount);
+                                activeGarage.AddVehicle(vehicle, parkingSpot);
+                                Console.WriteLine("ADDED VEHICLE");
 
+                                Console.ReadLine();
+                                break;
+                            case 2:
+                                int cylinderCount = int.Parse(recievedInformation[3]);
+                                activeGarage.AddVehicle(new Motorcycle(regNumber, color, wheelCount, cylinderCount), parkingSpot);
+                                Console.WriteLine("ADDED MC");
+                                Console.ReadLine();
+                                break;
+                            case 3:
+                                string fuelType = recievedInformation[3];
+                                activeGarage.AddVehicle(new Car(regNumber, color, wheelCount, fuelType), parkingSpot);
+                                Console.WriteLine(" ADDED CAR");
+                                Console.ReadLine();
+                                break;
+                            case 4:
+                                int numberOfSeats = int.Parse(recievedInformation[3]);
+                                activeGarage.AddVehicle(new Bus(regNumber, color, wheelCount, numberOfSeats), parkingSpot);
+                                Console.WriteLine("ADDED BUS");
+                                Console.ReadLine();
+                                break;
+                            default:
+                                Console.WriteLine("Error.");
+                                Console.ReadLine();
+                                break;
+                        }
+
+                        Console.WriteLine($"Vehicle was entered into the garage at parking spot {parkingSpot}");
+                    }
                 }
                 catch (System.FormatException)
                 {
@@ -153,7 +162,6 @@ namespace GarageApp
                     Console.ReadLine();
                     continue;
                 }
-                Console.WriteLine($"Vehicle was entered into the garage at parking spot {parkingSpot}");
 
                 Console.ReadLine();
                 isActive = false;
@@ -165,16 +173,16 @@ namespace GarageApp
         internal bool ListVehicles(string? filterList)
         {
             Console.Clear();
-            
 
-                if (activeGarage.IsEmpty())
-                {
-                    Console.WriteLine("Garage is empty!");
-                    Console.ReadLine();
-                    return false;
-                }
-                Console.WriteLine("Vehicles currently in garage: ");
-                activeGarage.GenerateVehicleList(filterList);
+
+            if (activeGarage.IsEmpty())
+            {
+                Console.WriteLine("Garage is empty!");
+                Console.ReadLine();
+                return false;
+            }
+            Console.WriteLine("Vehicles currently in garage: ");
+            activeGarage.GenerateVehicleList(filterList);
             return true;
         }
     }

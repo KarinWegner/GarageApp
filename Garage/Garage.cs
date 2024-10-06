@@ -264,5 +264,22 @@ namespace GarageApp
         {
             throw new NotImplementedException();
         }
+
+        internal bool FindVehicle(string regNumber)
+        {
+            bool found = vehicleArray.Where(T => T != null)
+                .Where(T => T.RegNumber == regNumber).Count() > 0;
+
+            //bool found = false; 
+            //foreach (var item in  vehicleArray)
+            //{
+            //    if (item.RegNumber== regNumber)
+            //    {
+            //        found = true; 
+            //        return found;
+            //    }
+            //}
+            return found;
+        }
     }
 }
